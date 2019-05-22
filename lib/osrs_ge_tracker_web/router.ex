@@ -18,5 +18,6 @@ defmodule OsrsGeTrackerWeb.Router do
 
     get "/", PageController, :index
     get "/about", AboutController, :index
+    get "/item/:name", ItemController, :index
   end
 end
