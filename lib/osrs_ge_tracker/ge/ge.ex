@@ -4,6 +4,6 @@ defmodule OsrsGeTracker.GE do
   alias OsrsGeTracker.GE.{Item, Price}
 
   def get_item(name) do
-    Repo.get_by!(Item, name: name |> String.downcase)
+    Repo.get_by!(Item, name: name |> String.downcase() |> String.replace("-", " "))
   end
 end

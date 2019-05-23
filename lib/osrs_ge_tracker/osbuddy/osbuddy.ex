@@ -8,7 +8,7 @@ defmodule OsrsGeTracker.OSBuddy do
     Poison.decode!(body)
     |> Enum.map(fn {k, v} ->
       {id, ""} = Integer.parse(k)
-      %Item{id: id, name: v["name"]}
+      %Item{id: id, name: v["name"] |> String.downcase}
     end)
   end
 
