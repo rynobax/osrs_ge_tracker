@@ -1,10 +1,10 @@
-defmodule OsrsGeTracker.Item do
+defmodule OsrsGeTracker.GE.Item do
   use Ecto.Schema
   import Ecto.Changeset
 
   schema "items" do
     field :name, :string
-    has_many :prices, OsrsGeTracker.Price
+    has_many :prices, OsrsGeTracker.GE.Price
 
     timestamps()
   end

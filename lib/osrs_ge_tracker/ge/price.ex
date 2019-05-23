@@ -1,4 +1,4 @@
-defmodule OsrsGeTracker.Price do
+defmodule OsrsGeTracker.GE.Price do
   use Ecto.Schema
   import Ecto.Changeset
 
@@ -9,7 +9,7 @@ defmodule OsrsGeTracker.Price do
     field :overall_qty, :integer
     field :sell_avg, :integer
     field :sell_qty, :integer
-    belongs_to :item, OsrsGeTracker.Item
+    belongs_to :item, OsrsGeTracker.GE.Item
 
     timestamps(updated_at: false)
   end
