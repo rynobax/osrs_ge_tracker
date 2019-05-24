@@ -6,14 +6,19 @@ defmodule OsrsGeTracker.Application do
   use Application
 
   def start(_type, _args) do
+    import Supervisor.Spec, warn: false
+
     # List all child processes to be supervised
     children = [
       # Start the Ecto repository
       OsrsGeTracker.Repo,
       # Start the endpoint when the application starts
-      OsrsGeTrackerWeb.Endpoint
-      # Starts a worker by calling: OsrsGeTracker.Worker.start_link(arg)
-      # {OsrsGeTracker.Worker, arg},
+      OsrsGeTrackerWeb.Endpoint,
+      # Cron jobs
+      worker(OsrsGeTracker.Scheduler, []),
+      # Startup initialization
+      worker(OsrsGeTracker.Startup, []),
+
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
