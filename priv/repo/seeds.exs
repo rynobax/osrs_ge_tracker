@@ -11,11 +11,13 @@
 # and so on) as they will fail if something goes wrong.
 
 alias OsrsGeTracker.Repo
-alias OsrsGeTracker.GE.{Item, Price}
+alias OsrsGeTracker.GE.{Item, DailyPrice, HourlyPrice, MinutelyPrice, Price}
 alias OsrsGeTracker.OSBuddy
 
-Repo.truncate(Price)
+Repo.truncate(DailyPrice)
+Repo.truncate(HourlyPrice)
+Repo.truncate(MinutelyPrice)
 Repo.truncate(Item)
 
-OSBuddy.getItemNames |> Enum.map(&Repo.insert!/1)
-OSBuddy.getCurrentPrices |> Enum.map(&Repo.insert!/1)
+OSBuddy.getItems |> Enum.map(&Repo.insert!/1)
+OSBuddy.getCurrentPrices |> Enum.map(&Price.to_daily_price/1) |> Enum.map(&Repo.insert!/1)

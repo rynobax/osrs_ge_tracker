@@ -1,13 +1,9 @@
-defmodule OsrsGeTracker.Repo.Migrations.CreateItems do
+defmodule OsrsGeTracker.Repo.Migrations.CreateHourlyPrices do
   use Ecto.Migration
 
   def change do
-    create table(:items, primary_key: false) do
-      # Item
-      add :id, :id, primary_key: true
-      add :name, :string
-
-      # Current price data
+    create table(:hourly_prices) do
+      add :item_id, references(:items)
       add :buy_avg, :integer
       add :sell_avg, :integer
       add :overall_avg, :integer
@@ -15,7 +11,7 @@ defmodule OsrsGeTracker.Repo.Migrations.CreateItems do
       add :sell_qty, :integer
       add :overall_qty, :integer
 
-      timestamps()
+      timestamps(updated_at: false)
     end
   end
 end

@@ -1,8 +1,8 @@
-defmodule OsrsGeTracker.Repo.Migrations.CreatePrices do
+defmodule OsrsGeTracker.Repo.Migrations.CreateDailyPrices do
   use Ecto.Migration
 
   def change do
-    create table(:prices) do
+    create table(:daily_prices) do
       add :item_id, references(:items)
       add :buy_avg, :integer
       add :sell_avg, :integer
