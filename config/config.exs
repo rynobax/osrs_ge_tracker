@@ -31,6 +31,14 @@ import_config "#{Mix.env()}.exs"
 
 config :osrs_ge_tracker, OsrsGeTracker.Scheduler,
   jobs: [
-    # Every minute
-    {"* * * * *", {Heartbeat, :send, []}},
+    # Every 5 minutes:
+    # - Update current prices
+    # - Add new minutely prices
+    {"*/5 * * * *", {OsrsGeTracker.Minutely, :start, []}},
+    # Every hour
+    # - Add new hourly price
+    {"0 * * * *", {OsrsGeTracker.Hourly, :start, []}},
+    # Every Day
+    # - Add new daily price
+    {"0 0 * * *", {OsrsGeTracker.Daily, :start, []}},
   ]

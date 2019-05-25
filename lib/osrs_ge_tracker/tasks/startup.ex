@@ -14,7 +14,7 @@ defmodule OsrsGeTracker.Startup do
   end
 
   defp maybe_init_items do
-    unless GE.item_table_populated() do
+    unless GE.item_table_populated() or Mix.env() == :test do
       Logger.info("Items were not populated, populating them now!")
       OSBuddy.getItems() |> Enum.map(&Repo.insert!/1)
     end
