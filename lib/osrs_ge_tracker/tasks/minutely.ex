@@ -1,5 +1,6 @@
 defmodule OsrsGeTracker.Minutely do
-  alias OsrsGeTracker.{GE, Repo, OSBuddy}
+  alias OsrsGeTracker.{Repo}
+  alias OsrsGeTracker.GE.{Price, Item}
 
   def start do
     prices = OsrsGeTracker.OSBuddy.getCurrentPrices()
@@ -8,10 +9,19 @@ defmodule OsrsGeTracker.Minutely do
   end
 
   def update_current_prices(prices) do
-    # todo
+    # cast to item changeset
+    # call repo.update
+    # mb create custom changeset for this
+    prices
+    |> Enum.map(fn price ->
+      price
+      |> Map.from_struct()
+      |> (fn item -> Item.changeset(%Item{id: price.item_id}, item) end).()
+      |> Repo.update()
+    end)
   end
 
   def update_minutely_prices(prices) do
-    # todo
+    prices |> Enum.map(&Price.to_minutely_price/1) |> Enum.map(&Repo.insert/1)
   end
 end

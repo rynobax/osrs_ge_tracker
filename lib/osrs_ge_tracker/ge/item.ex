@@ -25,7 +25,14 @@ defmodule OsrsGeTracker.GE.Item do
   @doc false
   def changeset(item, attrs) do
     item
-    |> cast(attrs, [:item_id, :name])
-    |> validate_required([:item_id, :name])
+    |> cast(attrs, [
+      :buy_avg,
+      :sell_avg,
+      :overall_avg,
+      :buy_qty,
+      :sell_qty,
+      :overall_qty
+    ])
+    |> validate_required([])
   end
 end
