@@ -2,12 +2,31 @@ defmodule OsrsGeTrackerWeb.HourlyTest do
   use OsrsGeTracker.DataCase
   alias OsrsGeTracker.{Hourly, Repo, GE}
 
-  @important_fields [:item_id, :buy_avg, :buy_qty, :overall_avg, :overall_qty, :sell_avg, :sell_qty]
+  @important_fields [
+    :item_id,
+    :buy_avg,
+    :buy_qty,
+    :overall_avg,
+    :overall_qty,
+    :sell_avg,
+    :sell_qty
+  ]
 
   setup do
     Repo.insert!(%GE.Item{
       id: 1,
       name: "Party Hat",
+      buy_avg: 0.0,
+      buy_qty: 0.0,
+      overall_avg: 0.0,
+      overall_qty: 0.0,
+      sell_avg: 0.0,
+      sell_qty: 0.0
+    })
+
+    Repo.insert!(%GE.Item{
+      id: 2,
+      name: "Rune Scim",
       buy_avg: 0.0,
       buy_qty: 0.0,
       overall_avg: 0.0,
@@ -67,55 +86,35 @@ defmodule OsrsGeTrackerWeb.HourlyTest do
              }
     end
 
-    # test "Combines data on a per item basis" do
-    #   data = [
-    #     %GE.MinutelyPrice{
-    #       item_id: 1,
-    #       buy_avg: 100,
-    #       buy_qty: 5,
-    #       overall_avg: 75,
-    #       overall_qty: 10,
-    #       sell_avg: 50,
-    #       sell_qty: 5
-    #     },
-    #     %GE.MinutelyPrice{
-    #       inserted_at: time(30),
-    #       item_id: 2,
-    #       buy_avg: 200,
-    #       buy_qty: 10,
-    #       overall_avg: 125,
-    #       overall_qty: 20,
-    #       sell_avg: 100,
-    #       sell_qty: 10
-    #     }
-    #   ]
+    test "Combines data on a per item basis" do
+      data = [
+        %GE.MinutelyPrice{
+          item_id: 1,
+          buy_avg: 100.0,
+          buy_qty: 5.0,
+          overall_avg: 75.0,
+          overall_qty: 10.0,
+          sell_avg: 50.0,
+          sell_qty: 5.0
+        },
+        %GE.MinutelyPrice{
+          inserted_at: time(30),
+          item_id: 2,
+          buy_avg: 100.0,
+          buy_qty: 5.0,
+          overall_avg: 75.0,
+          overall_qty: 10.0,
+          sell_avg: 50.0,
+          sell_qty: 5.0
+        }
+      ]
 
-    #   data |> Enum.map(&Repo.insert!/1)
+      data |> Enum.map(&Repo.insert!/1)
 
-    #   assert Repo.one(GE.HourlyPrice) == nil
-    #   assert Hourly.update_hourly_prices() == nil
-
-    #   assert Repo.all(GE.HourlyPrice) == [
-    #            %GE.HourlyPrice{
-    #              item_id: 1,
-    #              buy_avg: 100,
-    #              buy_qty: 5,
-    #              overall_avg: 75,
-    #              overall_qty: 10,
-    #              sell_avg: 50,
-    #              sell_qty: 5
-    #            },
-    #            %GE.HourlyPrice{
-    #              item_id: 2,
-    #              buy_avg: 200,
-    #              buy_qty: 10,
-    #              overall_avg: 125,
-    #              overall_qty: 20,
-    #              sell_avg: 100,
-    #              sell_qty: 10
-    #            }
-    #          ]
-    # end
+      assert Repo.one(GE.HourlyPrice) == nil
+      assert Hourly.update_hourly_prices()
+      assert length(Repo.all(GE.HourlyPrice)) == 2
+    end
   end
 
   # describe "prune_minutely_prices" do

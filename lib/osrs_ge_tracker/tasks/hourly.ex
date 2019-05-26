@@ -46,7 +46,7 @@ defmodule OsrsGeTracker.Hourly do
         Repo.insert!(hourly)
       end)
 
-    prices
+    :ok
   end
 
   def prune_minutely_prices do

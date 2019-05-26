@@ -23,5 +23,6 @@ defmodule OsrsGeTracker.Minutely do
 
   def update_minutely_prices(prices) do
     prices |> Enum.map(&Price.to_minutely_price/1) |> Enum.map(&Repo.insert/1)
+    :ok
   end
 end
