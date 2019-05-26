@@ -3,13 +3,13 @@ defmodule OsrsGeTracker.Hourly do
   alias OsrsGeTracker.GE.{MinutelyPrice, HourlyPrice}
   import Ecto.Query
 
-  @secs_in_hr 3600
-  @expiration @secs_in_hr * 4
-
   def start do
     update_hourly_prices()
     prune_minutely_prices()
   end
+
+  @secs_in_hr 3600
+  @expiration @secs_in_hr * 4
 
   # Add a new entry in hourly prices for each item
   def update_hourly_prices do
