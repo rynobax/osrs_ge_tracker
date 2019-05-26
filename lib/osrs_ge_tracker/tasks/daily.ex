@@ -3,7 +3,7 @@ defmodule OsrsGeTracker.Daily do
   alias OsrsGeTracker.GE.{DailyPrice, HourlyPrice}
   import Ecto.Query
 
-  def start do
+  def tick do
     update_daily_prices()
     prune_hourly_prices()
   end

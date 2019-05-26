@@ -2,7 +2,7 @@ defmodule OsrsGeTracker.Minutely do
   alias OsrsGeTracker.{Repo}
   alias OsrsGeTracker.GE.{Price, Item}
 
-  def start do
+  def tick do
     prices = OsrsGeTracker.OSBuddy.getCurrentPrices()
     update_current_prices(prices)
     update_minutely_prices(prices)

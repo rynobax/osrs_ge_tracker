@@ -17,8 +17,7 @@ defmodule OsrsGeTracker.Application do
       # Cron jobs
       worker(OsrsGeTracker.Scheduler, []),
       # Startup initialization
-      worker(OsrsGeTracker.Startup, []),
-
+      worker(OsrsGeTracker.Startup, [])
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

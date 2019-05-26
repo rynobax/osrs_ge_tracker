@@ -34,11 +34,11 @@ config :osrs_ge_tracker, OsrsGeTracker.Scheduler,
     # Every 5 minutes:
     # - Update current prices
     # - Add new minutely prices
-    {"*/5 * * * *", {OsrsGeTracker.Minutely, :start, []}},
+    {"*/5 * * * *", {OsrsGeTracker.Minutely, :tick, []}},
     # Every hour
     # - Add new hourly price
-    {"0 * * * *", {OsrsGeTracker.Hourly, :start, []}},
+    {"0 * * * *", {OsrsGeTracker.Hourly, :tick, []}},
     # Every Day
     # - Add new daily price
-    {"0 0 * * *", {OsrsGeTracker.Daily, :start, []}},
+    {"0 0 * * *", {OsrsGeTracker.Daily, :tick, []}},
   ]
