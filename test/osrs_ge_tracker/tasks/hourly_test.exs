@@ -35,6 +35,17 @@ defmodule OsrsGeTrackerWeb.HourlyTest do
       sell_qty: 0.0
     })
 
+    Repo.insert!(%GE.Item{
+      id: 3,
+      name: "Dragon dagger",
+      buy_avg: 0.0,
+      buy_qty: 0.0,
+      overall_avg: 0.0,
+      overall_qty: 0.0,
+      sell_avg: 0.0,
+      sell_qty: 0.0
+    })
+
     :ok
   end
 
@@ -45,11 +56,29 @@ defmodule OsrsGeTrackerWeb.HourlyTest do
     |> NaiveDateTime.truncate(:second)
   end
 
+  defp price(overrides) do
+    struct(
+      GE.MinutelyPrice,
+      Map.merge(
+        %{
+          item_id: 1,
+          buy_avg: 0.0,
+          buy_qty: 0.0,
+          overall_avg: 0.0,
+          overall_qty: 0.0,
+          sell_avg: 0.0,
+          sell_qty: 0.0
+        },
+        overrides
+      )
+    )
+  end
+
   describe "update_hourly_prices" do
     test "Combines data from last hour into hourly entry" do
       data = [
         # From the past hour
-        %GE.MinutelyPrice{
+        price(%{
           item_id: 1,
           buy_avg: 100.0,
           buy_qty: 5.0,
@@ -57,8 +86,8 @@ defmodule OsrsGeTrackerWeb.HourlyTest do
           overall_qty: 10.0,
           sell_avg: 50.0,
           sell_qty: 5.0
-        },
-        %GE.MinutelyPrice{
+        }),
+        price(%{
           inserted_at: time(30),
           item_id: 1,
           buy_avg: 200.0,
@@ -67,7 +96,7 @@ defmodule OsrsGeTrackerWeb.HourlyTest do
           overall_qty: 20.0,
           sell_avg: 100.0,
           sell_qty: 10.0
-        }
+        })
       ]
 
       data |> Enum.map(&Repo.insert!/1)
@@ -75,38 +104,23 @@ defmodule OsrsGeTrackerWeb.HourlyTest do
       assert Repo.one(GE.HourlyPrice) == nil
       Hourly.update_hourly_prices()
 
-      assert Map.take(Repo.one(GE.HourlyPrice), @important_fields) == %{
-               item_id: 1,
-               buy_avg: 150.0,
-               buy_qty: 7.5,
-               overall_avg: 100.0,
-               overall_qty: 15.0,
-               sell_avg: 75.0,
-               sell_qty: 7.5
-             }
+      expected = %{
+        item_id: 1,
+        buy_avg: 150.0,
+        buy_qty: 7.5,
+        overall_avg: 100.0,
+        overall_qty: 15.0,
+        sell_avg: 75.0,
+        sell_qty: 7.5
+      }
+
+      assert Map.take(Repo.one(GE.HourlyPrice), @important_fields) == expected
     end
 
     test "Combines data on a per item basis" do
       data = [
-        %GE.MinutelyPrice{
-          item_id: 1,
-          buy_avg: 100.0,
-          buy_qty: 5.0,
-          overall_avg: 75.0,
-          overall_qty: 10.0,
-          sell_avg: 50.0,
-          sell_qty: 5.0
-        },
-        %GE.MinutelyPrice{
-          inserted_at: time(30),
-          item_id: 2,
-          buy_avg: 100.0,
-          buy_qty: 5.0,
-          overall_avg: 75.0,
-          overall_qty: 10.0,
-          sell_avg: 50.0,
-          sell_qty: 5.0
-        }
+        price(%{item_id: 1}),
+        price(%{inserted_at: time(30), item_id: 2})
       ]
 
       data |> Enum.map(&Repo.insert!/1)
@@ -117,45 +131,23 @@ defmodule OsrsGeTrackerWeb.HourlyTest do
     end
   end
 
-  # describe "prune_minutely_prices" do
-  #   test "Removes data older than 4 houers" do
-  #     data = [
-  #       # From the past hour
-  #       %GE.MinutelyPrice{
-  #         item_id: 1,
-  #         buy_avg: 100,
-  #         buy_qty: 5,
-  #         overall_avg: 75,
-  #         overall_qty: 10,
-  #         sell_avg: 50,
-  #         sell_qty: 5
-  #       },
-  #       # outside of past hour, inside of 4 hours
-  #       %GE.MinutelyPrice{
-  #         inserted_at: time(90),
-  #         item_id: 2,
-  #         buy_avg: 200,
-  #         buy_qty: 5,
-  #         overall_avg: 75,
-  #         overall_qty: 10,
-  #         sell_avg: 50,
-  #         sell_qty: 5
-  #       },
-  #       # outside of 4 hours
-  #       %GE.MinutelyPrice{
-  #         inserted_at: time(300),
-  #         item_id: 3,
-  #         buy_avg: 200,
-  #         buy_qty: 5,
-  #         overall_avg: 75,
-  #         overall_qty: 10,
-  #         sell_avg: 50,
-  #         sell_qty: 5
-  #       }
-  #     ]
+  describe "prune_minutely_prices" do
+    test "Removes data older than 4 hours" do
+      data = [
+        # From the past hour
+        price(%{item_id: 1}),
+        # outside of past hour, inside of 4 hours
+        price(%{inserted_at: time(90), item_id: 2}),
+        # outside of 4 hours
+        price(%{inserted_at: time(300), item_id: 3})
+      ]
 
-  #     Hourly.prune_minutely_prices()
-  #     # TODO: Check that it go removed
-  #   end
-  # end
+      data |> Enum.map(&Repo.insert!/1)
+
+      Hourly.prune_minutely_prices()
+
+      res = Repo.all(GE.MinutelyPrice)
+      assert Enum.map(res, fn e -> Map.get(e, :item_id) end) == [1, 2]
+    end
+  end
 end
