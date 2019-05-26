@@ -8,12 +8,12 @@ defmodule OsrsGeTracker.Repo.Migrations.CreateItems do
       add :name, :string
 
       # Current price data
-      add :buy_avg, :integer
-      add :sell_avg, :integer
-      add :overall_avg, :integer
-      add :buy_qty, :integer
-      add :sell_qty, :integer
-      add :overall_qty, :integer
+      add :buy_avg, :float
+      add :sell_avg, :float
+      add :overall_avg, :float
+      add :buy_qty, :float
+      add :sell_qty, :float
+      add :overall_qty, :float
 
       timestamps()
     end

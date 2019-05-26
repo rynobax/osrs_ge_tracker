@@ -12,12 +12,12 @@ defmodule OsrsGeTracker.GE.Item do
     has_many :hourly_prices, OsrsGeTracker.GE.HourlyPrice
 
     # Current price
-    field :buy_avg, :integer
-    field :sell_avg, :integer
-    field :overall_avg, :integer
-    field :buy_qty, :integer
-    field :sell_qty, :integer
-    field :overall_qty, :integer
+    field :buy_avg, :float
+    field :sell_avg, :float
+    field :overall_avg, :float
+    field :buy_qty, :float
+    field :sell_qty, :float
+    field :overall_qty, :float
 
     timestamps()
   end

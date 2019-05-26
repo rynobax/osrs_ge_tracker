@@ -1,6 +1,8 @@
 defmodule OsrsGeTracker.OSBuddy do
   alias OsrsGeTracker.GE.{Item, Price}
 
+  # / 1 to convert to float
+
   def getItems do
     nameUrl = "https://rsbuddy.com/exchange/names.json"
     %HTTPoison.Response{body: nameBody} = HTTPoison.get!(nameUrl)
@@ -18,12 +20,12 @@ defmodule OsrsGeTracker.OSBuddy do
       %Item{
         id: id,
         name: v["name"] |> String.downcase(),
-        buy_avg: price["buy_average"],
-        buy_qty: price["buy_quantity"],
-        overall_avg: price["overall_average"],
-        overall_qty: price["overall_quantity"],
-        sell_avg: price["sell_average"],
-        sell_qty: price["sell_quantity"]
+        buy_avg: price["buy_average"] / 1,
+        buy_qty: price["buy_quantity"] / 1,
+        overall_avg: price["overall_average"] / 1,
+        overall_qty: price["overall_quantity"] / 1,
+        sell_avg: price["sell_average"] / 1,
+        sell_qty: price["sell_quantity"] / 1
       }
     end)
   end
@@ -36,12 +38,12 @@ defmodule OsrsGeTracker.OSBuddy do
     |> Enum.map(fn {_, v} ->
       %Price{
         item_id: v["id"],
-        buy_avg: v["buy_average"],
-        buy_qty: v["buy_quantity"],
-        overall_avg: v["overall_average"],
-        overall_qty: v["overall_quantity"],
-        sell_avg: v["sell_average"],
-        sell_qty: v["sell_quantity"]
+        buy_avg: v["buy_average"] / 1,
+        buy_qty: v["buy_quantity"] / 1,
+        overall_avg: v["overall_average"] / 1,
+        overall_qty: v["overall_quantity"] / 1,
+        sell_avg: v["sell_average"] / 1,
+        sell_qty: v["sell_quantity"] / 1
       }
     end)
   end
