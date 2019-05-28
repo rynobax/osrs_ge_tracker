@@ -23,9 +23,6 @@ defmodule OsrsGeTracker.Minutely do
   end
 
   def update_current_prices(prices) do
-    # cast to item changeset
-    # call repo.update
-    # mb create custom changeset for this
     prices
     |> Enum.map(fn price ->
       price
