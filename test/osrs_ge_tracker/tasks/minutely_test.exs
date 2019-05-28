@@ -1,4 +1,4 @@
-defmodule OsrsGeTrackerWeb.MinutelyTest do
+defmodule OsrsGeTracker.MinutelyTest do
   use OsrsGeTracker.DataCase
   alias OsrsGeTracker.{Minutely, Repo, GE}
 

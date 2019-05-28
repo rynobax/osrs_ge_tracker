@@ -1,4 +1,4 @@
-defmodule OsrsGeTrackerWeb.DailyTest do
+defmodule OsrsGeTracker.DailyTest do
   use OsrsGeTracker.DataCase
   alias OsrsGeTracker.{Daily, Repo, GE}
 

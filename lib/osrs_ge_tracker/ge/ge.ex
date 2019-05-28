@@ -8,6 +8,5 @@ defmodule OsrsGeTracker.GE do
 
   def get_item(name) do
     Repo.get_by!(Item, name: name |> String.downcase() |> String.replace("-", " "))
-    |> Repo.preload([:prices])
   end
 end
