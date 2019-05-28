@@ -1,4 +1,4 @@
-List:
+Some controls for liquid assets, min %, etc
 <%= for item <- @items do %>
-  <div><%= item.name %> <%= item.buy_avg %> <%= item.sell_avg %></div>
+  <%= render("card.html", item: item) %>
 <% end %>
