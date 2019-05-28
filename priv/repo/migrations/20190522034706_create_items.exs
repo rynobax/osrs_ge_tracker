@@ -15,6 +15,10 @@ defmodule OsrsGeTracker.Repo.Migrations.CreateItems do
       add :sell_qty, :float
       add :overall_qty, :float
 
+      # Computed price data
+      add :margin_abs, :float
+      add :margin_perc, :float
+
       timestamps()
     end
   end

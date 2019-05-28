@@ -19,5 +19,5 @@ Repo.truncate(HourlyPrice)
 Repo.truncate(MinutelyPrice)
 Repo.truncate(Item)
 
-OSBuddy.getItems |> Enum.map(&Repo.insert!/1)
-OSBuddy.getCurrentPrices |> Enum.map(&Price.to_daily_price/1) |> Enum.map(&Repo.insert!/1)
+# OSBuddy.getItems |> Enum.map(&Repo.insert!/1)
+# OSBuddy.getCurrentPrices |> Enum.map(&Price.to_daily_price/1) |> Enum.map(&Repo.insert!/1)
