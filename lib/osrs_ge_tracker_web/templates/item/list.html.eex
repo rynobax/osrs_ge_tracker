@@ -1,0 +1,4 @@
+List:
+<%= for item <- @items do %>
+  <div><%= item.name %> <%= item.buy_avg %> <%= item.sell_avg %></div>
+<% end %>

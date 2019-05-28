@@ -14,7 +14,7 @@ defmodule OsrsGeTracker.Minutely do
     margin_perc = case {price.buy_avg, price.sell_avg} do
       {0.0, _} -> nil
       {_, 0.0} -> nil
-      _ -> ((price.buy_avg / price.sell_avg) - 1) * 100
+      {buy, sell} -> ((buy / sell) - 1) * 100
     end
 
     price
