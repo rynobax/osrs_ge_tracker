@@ -9,7 +9,6 @@ defmodule OsrsGeTrackerWeb.ItemController do
 
   def show(conn, %{"name" => name}) do
     item = GE.get_item(name)
-    [%GE.Price{ :buy_avg => price } | _] = item.prices
-    render(conn, "details.html", name: name, id: item.id, price: price)
+    render(conn, "details.html", name: name, id: item.id, price: item.buy_avg)
   end
 end
