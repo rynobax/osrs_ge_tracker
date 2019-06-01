@@ -6,6 +6,7 @@ defmodule OsrsGeTracker.Repo.Migrations.CreateItems do
       # Item
       add :id, :id, primary_key: true
       add :name, :string
+      add :buy_limit, :integer
 
       # Current price data
       add :buy_avg, :float

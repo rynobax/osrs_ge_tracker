@@ -5,6 +5,7 @@ defmodule OsrsGeTracker.GE.Item do
   schema "items" do
     # Item md
     field :name, :string
+    field :buy_limit, :integer
 
     # Relations
     has_many :daily_prices, OsrsGeTracker.GE.DailyPrice
