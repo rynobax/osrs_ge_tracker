@@ -1,1 +1,10 @@
-<div><%= @item.name %> <%= @item.buy_avg %> <%= @item.sell_avg %></div>
+<div class="card">
+  <div class="card-img" style="background-image: url('/images/items/<%=@item.id %>.png')" ></div>
+  <div class="card-body">
+  <div class="card-title">
+    <%= pretty_name(@item) %>
+  </div>
+  <%= @item.buy_avg %> <%= @item.sell_avg %>
+  <div class="card-chart" id="card-chart-<%=@item.id %>"></div>
+  </div>
+</div>

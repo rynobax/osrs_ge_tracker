@@ -8,7 +8,7 @@ defmodule OsrsGeTrackerWeb.ItemController do
   end
 
   def show(conn, %{"name" => name}) do
-    item = GE.get_item(name)
+    item = GE.get_item_by_name(name)
     render(conn, "details.html", name: name, id: item.id, price: item.buy_avg)
   end
 end

@@ -14,6 +14,27 @@
   */
  @tailwind components;
 
+ .card {
+  @apply rounded shadow-md max-w-sm flex flex-row;
+  height: 80px;
+ }
+
+ .card-img {
+   @apply flex-none h-auto m-2;
+   width: 80px;
+   background-size: contain;
+   background-repeat: no-repeat;
+   background-position: center;
+ }
+
+ .card-body {
+   @apply flex-grow;
+ }
+
+ .card-title {
+   @apply text-gray-900 font-bold text-xl;
+ }
+
  /**
   * Here you would add any of your custom component classes; stuff that you'd
   * want loaded *before* the utilities so that the utilities could still

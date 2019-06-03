@@ -1,7 +1,7 @@
 defmodule OsrsGeTrackerWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :osrs_ge_tracker
 
-  socket "/socket", OsrsGeTrackerWeb.UserSocket,
+  socket "/socket", OsrsGeTrackerWeb.ChartSocket,
     websocket: true,
     longpoll: false
 

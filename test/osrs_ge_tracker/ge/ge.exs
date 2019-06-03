@@ -36,7 +36,7 @@ defmodule OsrsGeTracker.GETest do
     end
   end
 
-  describe "get_item" do
+  describe "get_item_by_name" do
     setup do
       Repo.insert!(item(%{
         id: 1,
@@ -47,7 +47,7 @@ defmodule OsrsGeTracker.GETest do
     end
 
     test "can get item" do
-      assert GE.get_item("party-hat").id == 1
+      assert GE.get_item_by_name("party-hat").id == 1
     end
   end
 end

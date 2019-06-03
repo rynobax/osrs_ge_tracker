@@ -2,3 +2,9 @@ Some controls for liquid assets, min %, etc
 <%= for item <- @items do %>
   <%= render("card.html", item: item) %>
 <% end %>
+
+<script>
+  //
+  // var el = document.querySelectorAll('.card-chart');
+  // console.log(el);
+</script>

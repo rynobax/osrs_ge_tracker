@@ -7,7 +7,11 @@ defmodule OsrsGeTracker.GE do
     Repo.exists?(Item)
   end
 
-  def get_item(name) do
+  def get_item_by_id(id) do
+    Repo.get!(Item, id)
+  end
+
+  def get_item_by_name(name) do
     Repo.get_by!(Item, name: name |> String.downcase() |> String.replace("-", " "))
   end
 
