@@ -8,7 +8,7 @@ defmodule OsrsGeTrackerWeb.ChartChannel do
 
     hourly =
       Enum.map(item.hourly_prices, fn p ->
-        Map.from_struct(p) |> Map.take([:buy_avg, :sell_avg, :created_at])
+        Map.from_struct(p) |> Map.take([:buy_avg, :sell_avg, :inserted_at])
       end)
 
     # Logger.info(hourly)

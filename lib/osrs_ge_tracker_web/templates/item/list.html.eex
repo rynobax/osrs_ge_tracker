@@ -4,7 +4,7 @@ Some controls for liquid assets, min %, etc
 <% end %>
 
 <script>
-  //
-  // var el = document.querySelectorAll('.card-chart');
-  // console.log(el);
+window.onload = () => {
+  window.osrs_ge_tracker.chart_hourly(<%= ids_json(@items) %>);
+}
 </script>
